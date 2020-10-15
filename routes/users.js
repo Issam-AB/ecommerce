@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const {salam} = require('../controllers/userController')
 
-router.get('/', (req, res) => {
-    res.send('user module')
-})
+router.get('/', salam)
+
 module.exports = router ;

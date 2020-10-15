@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require('mongoose');
 
 //** Import Router */
-const userRouter = require("./routes/user")
+const userRouter = require("./routes/users")
 
 //* Config App */
 require("dotenv").config();
@@ -18,13 +18,8 @@ mongoose.connect(process.env.DATABASE, {
     .catch(() => console.log('not connect to database'))
 
 //* Midleware  */
-app.use('api/user', userRouter);
+app.use('/api/user', userRouter);
 
-app.get('/', (req, res) => {
-    res.send({
-        message: "salam mes chere deeloppeur"
-    });
-})
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`app is running on port ${port}`));
