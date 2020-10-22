@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require('mongoose');
 // var bodyParser = require('body-parser');
-const expressValidator = require("express-validator")
+const expressValidator = require("express-validator");
+const cookieParser = require('cookie-parser')
 
 //** Import Router */
 const userRouter = require("./routes/users")
@@ -28,17 +29,16 @@ mongoose.connect(process.env.DATABASE, {
 
 // }).then(() => console.log(`db connected in db ${db}`))
 //     .catch(() => console.error('not connect to database'));
-app.use(express.json());
+
 //* Midleware  */
-
-
+app.use(express.json());
+app.use(cookieParser());
+app.use(expressValidator());
 app.use('/api/user', userRouter);
 
 
 // app.use(bodyParser.json());
 
-
-// app.use(expressValidator());
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`app is running on port ${port}`));

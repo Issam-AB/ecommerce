@@ -1,4 +1,5 @@
 const Users = require('../models/user');
+const jwt = require('jsonwebtoken');
 
 exports.salam = (req, res) => {
     res.send({
@@ -16,7 +17,36 @@ exports.signup = (req, res) => {
         if (err) {
             return res.status(400).send(err)
         }
-         
+
         res.send(user);
+    })
+}
+
+exports.signin = (req, res) => {
+
+    const { email, password } = req.body;
+
+    Users.findOne({ email }, (error, user) => {
+
+        if (error || !user) {
+            return res.status(400).json({
+                error: 'User not fond with this email, Please signUp ! '
+            })
+        }
+
+        if (!user.authenticate(password)) {
+            return res.status(401).json({
+                error: 'Email and Password dont match'
+            })
+        }
+
+        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+        res.cookie('token', token, { expire: new Date() + 864000 })
+
+        const { _id, name, email, role } = user;
+        return res.json({
+            token, user: { _id, name, email, role }
+        })
+
     })
 }
