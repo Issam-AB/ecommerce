@@ -1,17 +1,15 @@
-const User = require("../models/user");
+const User = require('../models/user');
 
 exports.userById = (req, res, next, id) => {
+  User.findById(id).exec((err, user) => {
+    if (err || !user) {
+      return res.status(404).json({
+        error: 'user not fond',
+      });
+    }
 
-    User.findById(id).exec((err, user) => {
+    req.profile = user;
 
-        if (err || !user) {
-            return res.status(404).json({
-                error: 'user not fond'
-            })
-        }
-
-        req.profile = user;
-
-        next();
-    })
-}
+    next();
+  });
+};
