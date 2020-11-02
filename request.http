@@ -1,0 +1,15 @@
+@api = http://localhost:8000/api
+
+### Sign in 
+POST {{api}}/signin
+Content-Type: application/json
+
+{
+    "email": "issam.AB@gmail.com",
+    "password":"123456"
+}
+### GET User
+GET {{api}}/profile/5f900a11fc4a694ca80deefd
+
+### Show All Category
+GET {{api}}/category
