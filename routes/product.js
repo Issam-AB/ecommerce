@@ -8,6 +8,9 @@ const {
   productById,
   removeProduct,
   updateProduct,
+  allProduct,
+  relatedProduct,
+  searchProduct,
 } = require('../controllers/productController');
 
 const { requireSignIn, isAuth, isAdmin } = require('../middlewares/auth');
@@ -26,6 +29,9 @@ route.delete(
   [requireSignIn, isAuth, isAdmin],
   removeProduct
 );
+route.get('/', allProduct);
+route.get('/related/:ProductId', relatedProduct);
+route.post('/search', searchProduct);
 
 route.param('userId', userById);
 route.param('ProductId', productById);
