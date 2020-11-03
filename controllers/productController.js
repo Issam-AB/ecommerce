@@ -207,3 +207,11 @@ exports.searchProduct = (req, res) => {
       });
     });
 };
+
+exports.photoProduct = (req, res) => {
+  const { data, contentType } = req.product.photo;
+  if (data) {
+    res.set('Content-Type', contentType);
+    return res.send(data);
+  }
+};
