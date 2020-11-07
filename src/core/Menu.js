@@ -3,15 +3,16 @@ import { Link, withRouter } from 'react-router-dom';
 import { API_URL } from '../config';
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
+import { isAntiticated } from '../auth/helpers';
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
     return {
-      color: '#fff',
+      color: '#2a9d8f',
     };
   } else
     return {
-      color: '',
+      color: '#fff',
     };
 };
 const Menu = (props) => {
@@ -26,13 +27,7 @@ const Menu = (props) => {
       })
       .catch();
   };
-  const isAntiticated = () => {
-    const jwt = localStorage.getItem('jwt_info');
-    if (jwt) {
-      return JSON.parse(jwt);
-    }
-    return false;
-  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -53,8 +48,8 @@ const Menu = (props) => {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            {isAntiticated() && (
-              <li className="nav-item active">
+            <Fragment>
+              <li className="nav-item ">
                 <Link
                   style={isActive(props.history, '/')}
                   className="nav-link"
@@ -63,7 +58,16 @@ const Menu = (props) => {
                   Home <span className="sr-only">(current)</span>
                 </Link>
               </li>
-            )}
+              <li className="nav-item ">
+                <Link
+                  style={isActive(props.history, '/dashboard')}
+                  className="nav-link"
+                  to="/dashboard"
+                >
+                  Dashborad <span className="sr-only">(current)</span>
+                </Link>
+              </li>
+            </Fragment>
           </ul>
           <ul className="navbar-nav ml-auto">
             {!isAntiticated() && (
