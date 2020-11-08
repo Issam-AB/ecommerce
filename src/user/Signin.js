@@ -3,6 +3,7 @@ import Layout from '../core/Layout';
 import { API_URL } from '../config';
 import toastr from 'toastr';
 import 'toastr/build/toastr.min.css';
+import {isAntiticated} from '../auth/helpers';
 
 const Signin = (props) => {
   const [user, setUser] = useState({
@@ -33,7 +34,7 @@ const Signin = (props) => {
             positionClass: 'toast-bottom-left',
           });
           localStorage.setItem('jwt_info', JSON.stringify(res));
-          props.history.push('/');
+          props.history.push(`${isAntiticated() && isAntiticated().user.role === 1 ? '/dashboard' : '/'}`);
         }
       })
       .catch((err) => {
@@ -69,7 +70,7 @@ const Signin = (props) => {
       <input
         type="submit"
         className="btn btn-lg btn btn-block btn-outline-info"
-        value="Sign Up"
+        value="Sign In"
       />
     </form>
   );

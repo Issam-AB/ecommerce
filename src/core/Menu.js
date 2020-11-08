@@ -62,7 +62,11 @@ const Menu = (props) => {
                 <Link
                   style={isActive(props.history, '/dashboard')}
                   className="nav-link"
-                  to="/dashboard"
+                  to={`${
+                    isAntiticated() && isAntiticated().user.role === 1
+                      ? 'admin'
+                      : ''
+                  }/Dashboard`}
                 >
                   Dashborad <span className="sr-only">(current)</span>
                 </Link>
