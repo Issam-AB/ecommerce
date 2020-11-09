@@ -26,6 +26,7 @@ exports.createProduct = (req, res) => {
         price: joi.required(),
         quantity: joi.required(),
         category: joi.required(),
+        shipping: joi.required(),
       });
       const { error } = schema.validate(field);
       if (error) {
